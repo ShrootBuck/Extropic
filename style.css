@@ -1,0 +1,226 @@
+/* ============================================================
+   Thermal — custom look for the Extropic deck
+   ============================================================ */
+
+:root {
+  --bg:        #05060a;
+  --bg-2:      #080b13;
+  --panel:     rgba(255,255,255,0.035);
+  --panel-brd: rgba(255,255,255,0.09);
+  --ink:       #e9ecf4;
+  --ink-dim:   #98a2b8;
+  --ink-faint: #5d6780;
+  --hot:       #ff6b35;
+  --ember:     #ffb347;
+  --cold:      #38bdf8;
+  --violet:    #a78bfa;
+  --mint:      #34d399;
+}
+
+html.dark,
+html {
+  --slidev-theme-primary: #ff6b35;
+  color-scheme: dark;
+}
+
+#slide-container,
+.slidev-layout,
+body {
+  background: var(--bg);
+}
+
+/* the deep base wash sits behind the noise field */
+#slide-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(120% 80% at 12% 0%,  rgba(255,107,53,0.16), transparent 55%),
+    radial-gradient(100% 70% at 92% 100%, rgba(56,189,248,0.13), transparent 55%),
+    linear-gradient(180deg, #06070d 0%, #05060a 55%, #04050a 100%);
+}
+
+.slidev-layout {
+  background: transparent !important;
+  position: relative;
+  z-index: 2;
+  color: var(--ink);
+  padding: 2.4rem 3rem;
+  font-feature-settings: "ss01", "cv05";
+}
+
+.slidev-layout.cover, .slidev-layout.center, .slidev-layout.intro {
+  background: transparent !important;
+}
+
+/* ---------- type ---------- */
+.slidev-layout h1 {
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  color: #fff;
+  font-size: 2.55rem;
+  margin-bottom: 0.35rem;
+}
+.slidev-layout h2 {
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #fff;
+  font-size: 1.5rem;
+}
+.slidev-layout p, .slidev-layout li { color: var(--ink-dim); line-height: 1.5; }
+.slidev-layout strong { color: #fff; font-weight: 600; }
+.slidev-layout code { color: var(--ember); background: rgba(255,179,71,0.10); padding: 0.08em 0.34em; border-radius: 4px; font-size: 0.9em; }
+.slidev-layout a { color: var(--cold); }
+
+/* ---------- utility classes ---------- */
+.kicker {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--hot);
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.kicker::after {
+  content: '';
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(90deg, rgba(255,107,53,0.55), rgba(255,107,53,0));
+}
+
+.grad {
+  background: linear-gradient(96deg, #ff6b35 0%, #ffb347 34%, #f5f7ff 62%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.grad-hot {
+  background: linear-gradient(96deg, #ff5722, #ffb347 70%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-brd);
+  border-radius: 14px;
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+}
+
+.mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+.hair {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,107,53,0.7), rgba(56,189,248,0.35), transparent);
+}
+
+.dimlist li { margin: 0.34rem 0; }
+
+/* stat chips */
+.stat { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+.stat .n { color: #fff; font-weight: 600; letter-spacing: -0.02em; }
+.stat .u { color: var(--ink-faint); }
+
+/* ---------- range sliders ---------- */
+input[type=range].thermo {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #1b2434, #38bdf8 12%, #a78bfa 45%, #ff6b35 100%);
+  outline: none;
+  cursor: pointer;
+}
+input[type=range].thermo::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px; height: 15px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #05060a;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.5), 0 0 14px 2px rgba(255,107,53,0.75);
+  cursor: pointer;
+}
+
+/* ---------- slidev chrome ---------- */
+.slidev-page { --slidev-code-background: rgba(255,255,255,0.04); }
+.slidev-layout :is(h1,h2,h3) + p { margin-top: 0.5rem; }
+
+/* keep the built-in nav from glowing white */
+.slidev-icon-btn { color: rgba(255,255,255,0.45); }
+
+/* footer page number */
+.pagenum {
+  position: absolute;
+  right: 1.5rem; bottom: 1.1rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.22);
+  z-index: 5;
+}
+
+/* ---------- entrance helpers ---------- */
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+.rise { animation: riseIn 0.75s cubic-bezier(.2,.7,.2,1) both; }
+
+@keyframes breathe {
+  0%,100% { opacity: 0.55; }
+  50%     { opacity: 1; }
+}
+.breathe { animation: breathe 2.6s ease-in-out infinite; }
+
+/* slidev click transitions feel snappier */
+.slidev-vclick-target { transition: all 400ms cubic-bezier(.2,.7,.2,1); }
+.slidev-vclick-hidden { transform: translateY(8px); }
+
+/* ---------- layout sizing ---------- */
+.slidev-layout { height: 100%; box-sizing: border-box; }
+
+/* ---------- shimmer for the cover ---------- */
+@keyframes shimmer {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+.shimmer {
+  background: linear-gradient(100deg,
+    #ff5722 0%, #ffb347 18%, #ffffff 33%, #38bdf8 48%,
+    #ff5722 66%, #ffb347 84%, #ffffff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: shimmer 9s linear infinite;
+}
+
+/* ---------- custom slide transition: "thermo" ---------- */
+.thermo-enter-active, .thermo-leave-active {
+  transition: opacity 480ms cubic-bezier(.2,.7,.2,1),
+              transform 480ms cubic-bezier(.2,.7,.2,1),
+              filter 480ms cubic-bezier(.2,.7,.2,1);
+}
+.thermo-enter-from { opacity: 0; transform: scale(1.045) translateY(10px); filter: blur(10px) saturate(1.6); }
+.thermo-leave-to   { opacity: 0; transform: scale(0.985); filter: blur(7px); }
+
+/* ---------- misc bits used in slides ---------- */
+.pill {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem; letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14); color: #98a2b8;
+}
+.pill.hot { border-color: rgba(255,140,80,0.45); color: #ffb347; background: rgba(255,107,53,0.08); }
+.dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; box-shadow: 0 0 8px currentColor; }
+
+.bignum { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.03em; color: #fff; }
+
+.aster { border-left: 2px solid rgba(255,107,53,0.55); padding-left: 0.75rem; }
