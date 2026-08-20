@@ -24,8 +24,6 @@ fonts:
 
 <div class="h-full flex flex-col justify-center">
 
-<div class="pill hot mb-7"><i class="dot" /> physics capstone &middot; 5 minutes</div>
-
 <h1 class="!text-[4.4rem] !leading-[0.92] !mb-0 tracking-tighter">
   <span class="shimmer">NOISE</span><br>
   <span class="text-white">IS NOT THE</span><br>
@@ -36,11 +34,7 @@ fonts:
 
 <div class="text-[0.95rem] text-[#98a2b8] max-w-[30rem] leading-relaxed">
   Every chip ever built spends energy <em class="text-white not-italic font-semibold">fighting</em> thermal noise.<br>
-  One company decided to compute with it instead.
-</div>
-
-<div class="mt-9 mono text-[0.62rem] tracking-[0.24em] uppercase text-[#5d6780]">
-  Zayd Krunz &nbsp;·&nbsp; thermodynamic computing &nbsp;·&nbsp; Extropic
+  What if we compute with it instead?
 </div>
 
 </div>
@@ -61,7 +55,6 @@ layout: default
 
 <div class="h-full flex flex-col">
 
-<div class="kicker">01 &nbsp;/&nbsp; the fight</div>
 <h1 class="mt-3">Your laptop is at war with heat</h1>
 <p class="!mt-1 text-[0.86rem] max-w-[46rem]">A voltage inside a real chip does not look like a 1 or a 0. It looks like this.</p>
 
@@ -106,7 +99,6 @@ layout: default
 
 <div class="h-full flex flex-col">
 
-<div class="kicker">02 &nbsp;/&nbsp; the irony</div>
 <h1 class="mt-3">…and then we ask it to roll dice</h1>
 <p class="!mt-1 text-[0.86rem] max-w-[52rem]">
   Generative AI doesn't <em>calculate</em> an answer. It <b class="text-white">draws a sample</b> from a probability distribution — millions of times per image.
@@ -140,7 +132,6 @@ layout: default
 
 <div class="h-full flex flex-col">
 
-<div class="kicker">03 &nbsp;/&nbsp; the move</div>
 <h1 class="mt-3">Stop suppressing the noise. <span class="grad-hot">Aim it.</span></h1>
 <p class="!mt-1 text-[0.86rem] max-w-[50rem]">
   A <b class="text-white">p&#8209;bit</b> is an ordinary transistor circuit biased right at the tipping point, so thermal jitter knocks it back and forth on its own.
@@ -176,7 +167,6 @@ layout: default
 
 <div class="h-full flex flex-col">
 
-<div class="kicker">04 &nbsp;/&nbsp; the physics</div>
 <h1 class="mt-3">Nature has always been a sampler</h1>
 <p class="!mt-1 text-[0.86rem] max-w-[54rem]">
   Statistical mechanics: a warm system doesn't freeze and doesn't go everywhere. <b class="text-white">The lower the energy, the exponentially more time it spends there.</b>
@@ -215,7 +205,6 @@ layoutClass: gap-8
 
 <div class="h-full flex flex-col justify-center pr-2">
 
-<div class="kicker">05 &nbsp;/&nbsp; the chip</div>
 <h1 class="mt-3 !text-[2.1rem]">Now wire a few hundred thousand of them together</h1>
 
 <div class="hair w-40 my-5" />
@@ -264,7 +253,6 @@ layoutClass: gap-8
 
 <div class="h-full flex flex-col justify-center pl-2">
 
-<div class="kicker">06 &nbsp;/&nbsp; the payoff</div>
 <h1 class="mt-3 !text-[2.1rem]">Order, pulled out of noise</h1>
 
 <div class="hair w-40 my-5" />
@@ -307,7 +295,6 @@ layoutClass: gap-6
 
 <div class="h-full flex flex-col justify-center pl-1">
 
-<div class="kicker">07 &nbsp;/&nbsp; it exists</div>
 <h1 class="mt-3 !text-[2.15rem]">This is not a thought experiment</h1>
 
 <div class="mt-5 space-y-2.5">
@@ -356,7 +343,6 @@ layout: default
 
 <div class="h-full flex flex-col">
 
-<div class="kicker">08 &nbsp;/&nbsp; the claim, and the asterisks</div>
 <h1 class="mt-3">Ten thousand times. <span class="text-[#5d6780]">Allegedly.</span></h1>
 
 <div class="panel mt-5 px-8 py-7 flex-1 min-h-0 flex items-center">
@@ -398,7 +384,6 @@ layout: default
 
 <div class="h-full flex flex-col justify-center">
 
-<div class="kicker">09 &nbsp;/&nbsp; why it's worth your attention</div>
 
 <h1 class="mt-6 !text-[2.9rem] !leading-[1.06] max-w-[44rem]">
   For eighty years we've built computers that spend energy
