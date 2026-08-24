@@ -1,5 +1,5 @@
 /* ============================================================
-   Thermal — custom look for the Extropic deck
+   Thermal: custom look for the Extropic deck
    ============================================================ */
 
 :root {
@@ -186,20 +186,6 @@ input[type=range].thermo::-webkit-slider-thumb {
 
 /* ---------- layout sizing ---------- */
 .slidev-layout { height: 100%; box-sizing: border-box; }
-
-/* ---------- shimmer for the cover ---------- */
-@keyframes shimmer {
-  0%   { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
-}
-.shimmer {
-  background: linear-gradient(100deg,
-    #ff5722 0%, #ffb347 18%, #ffffff 33%, #38bdf8 48%,
-    #ff5722 66%, #ffb347 84%, #ffffff 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-  animation: shimmer 9s linear infinite;
-}
 
 /* ---------- custom slide transition: "thermo" ---------- */
 .thermo-enter-active, .thermo-leave-active {

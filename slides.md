@@ -5,7 +5,7 @@ title: Noise Is Not the Enemy
 info: |
   ## Noise Is Not the Enemy
   Thermodynamic computing, p-bits, and Extropic's Z1.
-  Zayd Krunz — physics capstone, 5 minutes.
+  Zayd Krunz, physics capstone, 5 minutes.
 class: text-left
 drawings:
   persist: false
@@ -25,7 +25,7 @@ fonts:
 <div class="h-full flex flex-col justify-center">
 
 <h1 class="!text-[4.4rem] !leading-[0.92] !mb-0 tracking-tighter">
-  <span class="shimmer">NOISE</span><br>
+  <NoiseTitle class="w-[16.5rem] h-[5.25rem] -ml-2 -mb-2 align-bottom" /><br>
   <span class="text-white">IS NOT THE</span><br>
   <span class="text-white">ENEMY</span>
 </h1>
@@ -40,13 +40,12 @@ fonts:
 </div>
 
 <!--
-**[0:00 – 0:20]**
 
 Right now, inside every chip in this room, there is a war going on.
 
 Electrons are rattling around at random, because the chip is warm. That's thermal noise. And essentially all of modern computer engineering is dedicated to crushing it.
 
-I want to tell you about a company that decided to stop fighting it — and use it instead.
+I want to tell you about a company that decided to stop fighting it and use it instead.
 -->
 
 ---
@@ -69,7 +68,7 @@ layout: default
   </div>
   <div v-click class="panel p-3">
     <div class="mono text-[0.55rem] tracking-[0.2em] uppercase text-[#ff8a4c]">the price</div>
-    <div class="text-[0.75rem] mt-1 text-[#c8d0e0]">Voltage headroom, bigger transistors, more heat — all just to keep the orange <b class="text-white">away from the line</b>.</div>
+    <div class="text-[0.75rem] mt-1 text-[#c8d0e0]">Voltage headroom, bigger transistors, more heat, all just to keep the orange <b class="text-white">away from the line</b>.</div>
   </div>
   <div v-click class="panel p-3">
     <div class="mono text-[0.55rem] tracking-[0.2em] uppercase text-[#ff8a4c]">the physics</div>
@@ -80,17 +79,24 @@ layout: default
 </div>
 
 <!--
-**[0:20 – 0:52]**
 
-This is what a voltage inside a chip actually looks like — the orange trace. Fuzzy. Analog. Undecided.
+This is what a voltage inside a chip actually looks like: the orange trace. Fuzzy. Analog. Undecided.
 
-A digital computer's entire job is to look at that and declare, with total confidence: above the line, one; below the line, zero. That's the blue trace — the fiction the chip insists on.
+[click]
 
-[click] And mostly the fiction holds. But keep an eye on it — every so often the noise spikes far enough to cross the line, and the chip confidently reports a bit that never happened. *(red dot + the counter goes red)*
+A digital computer's entire job is to look at that and declare, with total confidence: above the line, one; below the line, zero. That's the blue trace, the fiction the chip insists on.
 
-[click] So the whole game is keeping that orange trace away from that line. You buy that margin with voltage headroom, with bigger transistors, and with waste heat. *(drag the noise slider up — the blue line falls apart)* That's what you're paying to prevent.
+And mostly the fiction holds. But keep an eye on it. Every so often the noise spikes far enough to cross the line, and the chip confidently reports a bit that never happened. *(red dot + the counter goes red)*
 
-[click] And it isn't sloppy engineering. Erasing randomness has a thermodynamic price. It's a law, and you can't design around it.
+[click]
+
+So the whole game is keeping that orange trace away from that line. You buy that margin with voltage headroom, with bigger transistors, and with waste heat. *(drag the noise slider up; the blue line falls apart)* That's what you're paying to prevent.
+
+[click]
+
+And it isn't sloppy engineering. Erasing randomness has a thermodynamic price. It's a law, and you can't design around it.
+
+*[If time permits, I can talk briefly about Maxwell's demon.]*
 -->
 
 ---
@@ -101,7 +107,7 @@ layout: default
 
 <h1 class="mt-3">…and then we ask it to roll dice</h1>
 <p class="!mt-1 text-[0.86rem] max-w-[52rem]">
-  Generative AI doesn't <em>calculate</em> an answer. It <b class="text-white">draws a sample</b> from a probability distribution — millions of times per image.
+  Generative AI doesn't <em>calculate</em> an answer. It <b class="text-white">draws a sample</b> from a probability distribution millions of times.
 </p>
 
 <div class="flex-1 min-h-0 flex items-center mt-4 pb-1">
@@ -109,21 +115,22 @@ layout: default
 </div>
 
 <div v-click class="mt-3 text-center text-[0.8rem] text-[#ffb347]">
-  We built a machine that can't be uncertain — and handed it the one job that's made of uncertainty.
+  We built a machine that can't be uncertain, then handed it the one job that's made of uncertainty.
 </div>
 
 </div>
 
 <!--
-**[0:50 – 1:25]**
 
 Here's the irony.
 
-The biggest workload we've built these hyper-precise machines for — generative AI — is fundamentally a dice-rolling machine. Image models, language models: they don't compute an answer. They draw a random sample from a probability distribution, over and over and over.
+Generative AI, the biggest workload we've built these hyper-precise machines for, is fundamentally a dice-rolling machine. Image models, language models: they don't compute an answer. They draw a random sample from a probability distribution, over and over and over.
 
-So a GPU burns hundreds of logic operations, and real power, running a pseudo-random number generator — an elaborate deterministic imitation of a coin flip — precisely because it has spent its whole existence guaranteeing that it can't actually flip a coin.
+So a GPU burns thousands of logic operations, and real power, running a pseudo-random number generator, an elaborate deterministic imitation of a coin flip, precisely because it has spent its whole existence guaranteeing that it can't actually flip a coin.
 
-[click] Meanwhile there's a perfectly good source of true randomness sitting right there in the silicon, for free. It's the noise we've been trying to kill.
+[click]
+
+We built a machine that can't be uncertain, then handed it the one job that's made of uncertainty. Meanwhile there's a perfectly good source of true randomness sitting right there in the silicon, for free. It's the noise we've been trying to kill.
 -->
 
 ---
@@ -142,7 +149,7 @@ layout: default
 </div>
 
 <div class="grid grid-cols-3 gap-4 mt-5 text-[0.72rem]">
-  <div v-click class="aster">One control voltage sets <b class="text-white">how loaded the coin is</b> — 0.1, 0.5, 0.9, anything.</div>
+  <div v-click class="aster">One control voltage sets <b class="text-white">how loaded the coin is</b>: 0.1, 0.5, 0.9, anything.</div>
   <div v-click class="aster">Tens of millions of flips per second, from <b class="text-white">one tiny circuit</b>.</div>
   <div v-click class="aster">The randomness costs nothing to make. <b class="text-white">Heat was already doing it.</b></div>
 </div>
@@ -150,15 +157,24 @@ layout: default
 </div>
 
 <!--
-**[1:25 – 2:00]**
 
-So here's the move. A p-bit — probabilistic bit.
+So here's the move: a p-bit, short for probabilistic bit.
 
 It's a small circuit made of completely ordinary transistors, biased right at the edge where thermal noise pushes it back and forth between zero and one, all by itself. That's the flickering square.
 
-And the trick is this knob — a control voltage. [drag the slider] Turn it down, and it spends most of its time at zero. Turn it up, most of its time at one. Watch the bar underneath: the measured fraction converges to exactly the probability I dialed in.
+And the trick is this control-voltage knob. *(drag the slider)* Turn it down, and it spends most of its time at zero. Turn it up, most of its time at one. Watch the bar underneath: the measured fraction converges to exactly the probability I dialed in.
 
-[click] So it's not vaguely random. It's a *tunable* coin. [click] Running at tens of megahertz. [click] And you're not generating the randomness — you're harvesting it. The heat was doing it anyway.
+[click]
+
+So it's not vaguely random. It's a *tunable* coin.
+
+[click]
+
+It runs at tens of megahertz.
+
+[click]
+
+And you're not generating the randomness; you're harvesting it. The heat was doing it anyway.
 -->
 
 ---
@@ -185,13 +201,24 @@ layout: default
 </div>
 
 <!--
-**[2:00 – 2:40]**
 
 Now the physics, and this is the part I actually love.
 
-Statistical mechanics says a system at some temperature doesn't sit still, and it doesn't wander everywhere either. It explores — and the lower the energy of a configuration, the exponentially more time it spends there. Deeper valley, far more likely. That's it. That's the whole law.
+Statistical mechanics says a system at some temperature doesn't sit still, and it doesn't wander everywhere either. It explores, spending exponentially more time in lower-energy configurations. Deeper valley, far more likely. That's it. That's the whole law.
 
-Watch. [click, drag cold] Cold: it's frozen — stuck in whatever valley it happened to start in. [click, drag hot] Hot: it's got so much energy it wanders anywhere and stops caring about the landscape at all. [click, drag middle] In between is where it gets interesting — it finds the deep valleys, but it can still climb out and look around.
+Watch.
+
+[click]
+
+Cold: it's frozen, stuck in whatever valley it happened to start in. *(drag cold)*
+
+[click]
+
+Hot: it's got so much energy it wanders anywhere and stops caring about the landscape at all. *(drag hot)*
+
+[click]
+
+In between is where it gets interesting. It finds the deep valleys, but it can still climb out and look around. *(drag to the middle)*
 
 And look at the bottom: the orange histogram is where the ball actually spent its time. The dashed blue line is what thermodynamics predicts it should be. They're the same curve.
 
@@ -210,9 +237,9 @@ layoutClass: gap-8
 <div class="hair w-40 my-5" />
 
 <div class="space-y-3 text-[0.78rem]">
-  <div v-click>Put p&#8209;bits on a grid. Let each one <b class="text-white">see only its neighbours</b> — this is literally the Ising model from your stat-mech chapter.</div>
+  <div v-click>Put p&#8209;bits on a grid. Let each one <b class="text-white">see only its neighbours</b>, just like the Ising model from your stat-mech chapter.</div>
   <div v-click>Every tick, each p&#8209;bit asks its neighbours what they're doing and re&#8209;flips itself accordingly. <b class="text-white">No CPU. No instructions.</b></div>
-  <div v-click>Memory and computation are <b class="text-white">the same transistors</b>. Nothing has to travel across the chip — which is where GPUs burn most of their power.</div>
+  <div v-click>Memory and computation are <b class="text-white">the same transistors</b>. Nothing has to travel across the chip, which is where GPUs burn most of their power.</div>
   <div v-click class="pt-1 text-[#ffb347]">Cool it down and structure appears out of static. Nobody computed those domains. <b class="text-white">The chip relaxed into them.</b></div>
 </div>
 
@@ -227,15 +254,24 @@ layoutClass: gap-8
 </div>
 
 <!--
-**[2:40 – 3:12]**
 
-So take a few hundred thousand of these and put them on a grid, where each p-bit can only see its immediate neighbours.
+So take a few hundred thousand of these.
 
-[click] That is literally the Ising model — the same lattice of interacting spins from statistical mechanics.
+[click]
 
-[click] Every tick, each p-bit asks its neighbours what they're doing and re-flips itself accordingly. There's no CPU driving this and no instruction stream. [click] Memory and computation are the same transistors, so nothing has to be shuttled across the chip — and moving data is where a GPU burns most of its energy.
+Put them on a grid where each p-bit can only see its immediate neighbours. That is literally the Ising model: the same lattice of interacting spins from statistical mechanics.
 
-[click] Watch what happens as it cools. At high temperature it's pure static. Cool it, and structure appears — domains, order, out of noise. Nobody computed those patterns. The chip just relaxed into them.
+[click]
+
+Every tick, each p-bit asks its neighbours what they're doing and re-flips itself accordingly. There's no CPU driving this and no instruction stream.
+
+[click]
+
+Memory and computation are the same transistors, so nothing has to be shuttled across the chip. Moving data is where a GPU burns most of its energy.
+
+[click]
+
+Watch what happens as it cools. At high temperature it's pure static. Cool it, and structure appears: domains and order, out of noise. Nobody computed those patterns. The chip just relaxed into them.
 -->
 
 ---
@@ -258,26 +294,25 @@ layoutClass: gap-8
 <div class="hair w-40 my-5" />
 
 <div class="space-y-3 text-[0.78rem]">
-  <div v-click>Those neighbour connections are <b class="text-white">programmable</b>. Change them and you change the energy landscape — you choose <em class="text-white not-italic">which patterns are the deep valleys</em>.</div>
+  <div v-click>Those neighbour connections are <b class="text-white">programmable</b>. Change them and you change the energy landscape. You choose <em class="text-white not-italic">which patterns are the deep valleys</em>.</div>
   <div v-click>Train it so the deep valleys are your <b class="text-white">data</b>. Then just let the physics fall in.</div>
-  <div v-click>Same silicon. Same thermal noise. I only told it what <b class="text-white">"low energy"</b> means — and a word crystallised out of static.</div>
-  <div v-click class="pt-1 text-[#ffb347]">That's a generative model. Same idea as an image diffusion model — except nothing computed its way there. <b class="text-white">It settled.</b></div>
+  <div v-click>Same silicon. Same thermal noise. I only told it what <b class="text-white">"low energy"</b> means, and a word crystallised out of static.</div>
+  <div v-click class="pt-1 text-[#ffb347]">That's a generative model. It uses the same idea as an image diffusion model, except nothing computed its way there. <b class="text-white">It settled.</b></div>
 </div>
 
 </div>
 
 <!--
-**[3:12 – 3:42]**
 
 And here's the payoff.
 
-[click] Those neighbour connections are programmable. Change them, and you change the energy landscape — you're choosing which patterns get to be the deep valleys.
+[click] Those neighbour connections are programmable. Change them, and you change the energy landscape. You're choosing which patterns get to be the deep valleys.
 
 [click] So you train it so that the deep valleys are your data. And then you just let the physics fall into them.
 
-[click] Same silicon, same thermal noise as the last slide. The only thing I changed is what "low energy" means — and a word crystallises out of static.
+[click] Same silicon, same thermal noise as the last slide. The only thing I changed is what "low energy" means, and a word crystallises out of static.
 
-[click] That is a generative model. It's the same idea as an image diffusion model pulling a picture out of noise — except nothing here computed its way to the answer. It settled into it. Extropic calls the chip a Thermodynamic Sampling Unit.
+[click] That is a generative model. It's the same idea as an image diffusion model pulling a picture out of noise, except nothing here computed its way to the answer. It settled into it. Extropic calls the chip a Thermodynamic Sampling Unit.
 -->
 
 ---
@@ -300,7 +335,7 @@ layoutClass: gap-6
 <div class="mt-5 space-y-2.5">
   <div v-click class="flex items-baseline gap-3">
     <span class="mono text-[0.58rem] text-[#5d6780] w-16 shrink-0">2025</span>
-    <span class="text-[0.76rem]"><b class="text-white">X0</b> — proof-of-concept chip + the <span class="mono text-[#ffb347]">XTR&#8209;0</span> dev board</span>
+    <span class="text-[0.76rem]"><b class="text-white">X0:</b> proof-of-concept chip + the <span class="mono text-[#ffb347]">XTR&#8209;0</span> dev board</span>
   </div>
   <div v-click class="flex items-baseline gap-3">
     <span class="mono text-[0.58rem] text-[#5d6780] w-16 shrink-0">JUL 2026</span>
@@ -308,7 +343,7 @@ layoutClass: gap-6
   </div>
   <div v-click class="flex items-baseline gap-3">
     <span class="mono text-[0.58rem] text-[#ff8a4c] w-16 shrink-0">NOW</span>
-    <span class="text-[0.76rem]"><b class="text-white">Z1</b> announced — the first full-scale sampling chip</span>
+    <span class="text-[0.76rem]"><b class="text-white">Z1</b> announced as the first full-scale sampling chip</span>
   </div>
 </div>
 
@@ -326,15 +361,28 @@ layoutClass: gap-6
 </div>
 
 <!--
-**[3:42 – 4:12]**
 
 And this is real, and it's recent.
 
-Extropic — founded by people out of Google's quantum lab — shipped X0, a working proof-of-concept chip, last year. [click] [click] In July, the Commerce Department signed a seventy-five-million-dollar letter of intent to help scale it in American fabs. [click] And this summer they announced Z1, the first full-scale one.
+[click]
 
-[click] About two hundred seventy thousand p-bits on a single die. Each one talking to sixteen neighbours. Sampling above fifty megahertz. Under twelve millimetres a side, drawing less than one watt.
+Extropic was founded by people out of Google's quantum lab, and last year it shipped X0, a working proof-of-concept chip.
 
-[click] And critically — this is ordinary CMOS at room temperature. It is not cryogenic and it is not quantum. Their roadmap goes to a billion p-bits in a rack.
+[click]
+
+In July, the Commerce Department signed a seventy-five-million-dollar letter of intent to help scale it in American fabs.
+
+[click]
+
+And this summer they announced Z1, the first full-scale one.
+
+[click]
+
+About two hundred seventy thousand p-bits on a single die. Each one talking to sixteen neighbours. Sampling above fifty megahertz. Under twelve millimetres a side, drawing less than one watt.
+
+[click]
+
+Most importantly, this is ordinary CMOS at room temperature. It is not cryogenic and it is not quantum. Their roadmap goes to a billion p-bits in a rack.
 -->
 
 ---
@@ -350,7 +398,7 @@ layout: default
 </div>
 
 <div class="grid grid-cols-4 gap-3 mt-4 text-[0.68rem]">
-  <div v-click class="aster">That number is from a <b class="text-white">simulation</b> of a chip that isn't shipping yet — not a measurement.</div>
+  <div v-click class="aster">That number is from a <b class="text-white">simulation</b> of a chip that isn't shipping yet, not a measurement.</div>
   <div v-click class="aster">"The right workloads" is doing heavy lifting. It <b class="text-white">can't run today's AI models</b> at all.</div>
   <div v-click class="aster">You'd have to <b class="text-white">rewrite everything</b> as energy-based models. The software is months old.</div>
   <div v-click class="aster">An independent tester found <b class="text-white">plain laptop code beat their own simulator</b> by 70×.</div>
@@ -363,17 +411,16 @@ layout: default
 </div>
 
 <!--
-**[4:12 – 4:45]**
 
 Their headline number is up to ten thousand times more energy-efficient than a GPU. And I want to be honest about that one.
 
 [click] It comes from a simulation, of a chip that isn't shipping yet. It's not a measurement.
 
-[click] "For the right workloads" is doing an enormous amount of work in that sentence — a TSU can't run today's AI models at all.
+[click] "For the right workloads" is doing an enormous amount of work in that sentence because a TSU can't run today's AI models at all.
 
 [click] You'd have to rewrite them as energy-based models, and that software ecosystem is a few months old.
 
-[click] And when an independent blogger benchmarked their library, naive laptop code beat it by about seventy times — because the hardware it's written for doesn't exist yet.
+[click] And when an independent blogger benchmarked their library, naive laptop code beat it by about seventy times because the hardware it's written for doesn't exist yet.
 
 [click] So: don't buy the ten thousand. But the physics underneath it is not the sketchy part.
 -->
@@ -398,25 +445,38 @@ layout: default
 <div class="hair w-80 my-8" />
 
 <div v-click class="text-[0.88rem] text-[#98a2b8] max-w-[40rem]">
-  Extropic may well not be the company that wins. But that reframing — noise as a <b class="text-white">resource</b> rather than a defect — is a genuinely different answer to the question <em class="text-white not-italic">"what is a computer?"</em>
-</div>
-
-<div class="mt-7 mono text-[0.6rem] tracking-[0.24em] uppercase text-[#46506a]">
-  thank you &nbsp;·&nbsp; questions
+  Extropic may well not be the company that wins. But reframing noise as a <b class="text-white">resource</b> rather than a defect gives a genuinely different answer to the question <em class="text-white not-italic">"what is a computer?"</em>
 </div>
 
 </div>
 
 <!--
-**[4:45 – 5:00]**
 
 So here's why I think it's worth your attention, whether or not it works.
 
-For about eighty years we have built computers that spend energy fighting thermodynamics — pinning every bit down, erasing every trace of randomness, and paying for it in heat.
+For about eighty years we have built computers that spend energy fighting thermodynamics by pinning every bit down, erasing every trace of randomness, and paying for it in heat.
 
 [click] This is a machine that lets thermodynamics do the computing instead.
 
-[click] Extropic may well not be the company that wins this. But that reframing — treating noise as a resource instead of a defect — is a genuinely different answer to the question "what is a computer."
+[click] Extropic may well not be the company that wins this. But reframing noise as a resource instead of a defect gives a genuinely different answer to the question "what is a computer."
+-->
 
-Thank you.
+---
+layout: default
+class: thank-you-slide
+---
+
+<div class="absolute inset-0 overflow-hidden">
+  <GradientValleys class="h-full w-full" />
+</div>
+
+<div class="relative z-10 h-full flex flex-col justify-center items-center text-center">
+  <h1 class="!text-[5.2rem] !leading-none !mb-0 tracking-tighter">THANK YOU</h1>
+  <div class="hair w-56 my-7" />
+  <div class="text-[0.9rem] tracking-[0.04em] text-[#c8d0e0]">Questions?</div>
+</div>
+
+<!--
+
+Thank you. Questions?
 -->

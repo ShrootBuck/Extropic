@@ -29,9 +29,9 @@ Everything animated is real computation running in the browser, not a video:
 | Component | What it actually does |
 |---|---|
 | `NoiseField.vue` | Drifting thermal field + grain behind every slide |
-| `BitCrusher.vue` | Gaussian (Johnson-Nyquist) noise on a real voltage, thresholded into a digital bit. Tail events cross the line and the digital output glitches — the slider drives it to failure |
+| `BitCrusher.vue` | Gaussian (Johnson-Nyquist) noise on a real voltage, thresholded into a digital bit. Tail events cross the line and the digital output glitches; the slider drives it to failure |
 | `PrngVsPbit.vue` | PRNG pipeline vs. a single physically-random bit |
-| `PBit.vue` | A tunable Bernoulli sampler — drag the bias, the measured fraction converges |
+| `PBit.vue` | A tunable Bernoulli sampler. Drag the bias and the measured fraction converges |
 | `EnergyLandscape.vue` | Metropolis walkers on an energy landscape; the histogram converges to the Boltzmann curve |
 | `IsingLattice.vue` | Checkerboard Gibbs sampling on a 2D Ising model, annealed live. With a `pattern` prop it pulls a word out of static |
 | `Z1Die.vue` | Stylised Z1 die with live p-bit activity |

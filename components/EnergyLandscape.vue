@@ -109,7 +109,6 @@ onMounted(() => {
     ctx.font = '9px "JetBrains Mono", monospace'
     ctx.shadowColor = 'rgba(0,0,0,0.95)'; ctx.shadowBlur = 5
     ctx.fillStyle = 'rgba(255,255,255,0.46)'
-    ctx.fillText('LOW ENERGY \u2014 where it wants to be', padX, eBot - 6)
     ctx.shadowBlur = 0
 
     // --- histogram: where it actually spends its time ---
@@ -136,8 +135,6 @@ onMounted(() => {
     }
     ctx.strokeStyle = 'rgba(120,215,255,0.9)'; ctx.lineWidth = 1.6
     ctx.setLineDash([4, 3]); ctx.stroke(); ctx.setLineDash([])
-    ctx.fillStyle = 'rgba(255,255,255,0.42)'
-    ctx.fillText('TIME THE BALL ACTUALLY SPENT HERE', padX, hTop - 3)
     ctx.fillStyle = 'rgba(120,215,255,0.85)'
     ctx.fillText('what thermodynamics predicts', W - 168, hTop - 3)
     ctx.shadowBlur = 0

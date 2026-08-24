@@ -34,8 +34,7 @@ onBeforeUnmount(() => { clearInterval(a); clearInterval(b) })
       <div class="meter">
         <div class="mfill" :style="{ width: (30 + 60 * Math.abs(Math.sin(ops / 900))) + '%' }" />
       </div>
-      <div class="mono readout">~200+ logic ops &nbsp;·&nbsp; every single sample</div>
-      <div class="ft">Hundreds of logic operations, burning real power,<br>to <em>imitate</em> a coin flip it can never actually make.</div>
+      <div class="ft">Thousands of logic operations, burning real power,<br>to <em>imitate</em> a coin flip it can never actually make.</div>
     </div>
 
     <div class="vs mono">vs</div>
@@ -54,8 +53,7 @@ onBeforeUnmount(() => { clearInterval(a); clearInterval(b) })
       <div class="tape">
         <i v-for="(b, i) in tape" :key="i" class="tb" :class="{ on: b === 1 }" />
       </div>
-      <div class="mono readout hotr">true randomness &nbsp;·&nbsp; straight off the thermal noise floor</div>
-      <div class="ft">It doesn't calculate a random number.<br>It <em>is</em> one.</div>
+      <div class="ft">It doesn't calculate a random number. It <em>is</em> one.</div>
     </div>
   </div>
 </template>
