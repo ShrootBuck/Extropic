@@ -193,7 +193,7 @@ layout: default
 </div>
 
 <div class="flex gap-6 mt-3 text-[0.7rem]">
-  <div v-click><span class="mono text-[#7dd3fc]">COLD →</span> trapped in whatever valley it started in</div>
+  <div v-click><span class="mono text-[#7dd3fc]">COLD →</span> each walker freezes in its nearest valley</div>
   <div v-click><span class="mono text-[#ff8a4c]">HOT →</span> so much energy it stops caring about the landscape</div>
   <div v-click><span class="mono text-[#ffb347]">JUST RIGHT →</span> finds the deep valleys, still escapes to look around</div>
 </div>
@@ -210,7 +210,7 @@ Watch.
 
 [click]
 
-Cold: it's frozen, stuck in whatever valley it happened to start in. *(drag cold)*
+Cold: each walker freezes in the valley nearest where it started. That is why the orange histogram has three peaks instead of matching the dashed equilibrium curve. *(drag cold)*
 
 [click]
 
@@ -237,7 +237,7 @@ layoutClass: gap-8
 <div class="hair w-40 my-5" />
 
 <div class="space-y-3 text-[0.78rem]">
-  <div v-click>Put p&#8209;bits on a grid. Let each one <b class="text-white">see only its neighbours</b>, just like the Ising model from your stat-mech chapter.</div>
+  <div v-click>Put p&#8209;bits on a grid. Let each one <b class="text-white">see only its neighbours</b>. That gives you an Ising model.</div>
   <div v-click>Every tick, each p&#8209;bit asks its neighbours what they're doing and re&#8209;flips itself accordingly. <b class="text-white">No CPU. No instructions.</b></div>
   <div v-click>Memory and computation are <b class="text-white">the same transistors</b>. Nothing has to travel across the chip, which is where GPUs burn most of their power.</div>
   <div v-click class="pt-1 text-[#ffb347]">Cool it down and structure appears out of static. Nobody computed those domains. <b class="text-white">The chip relaxed into them.</b></div>
