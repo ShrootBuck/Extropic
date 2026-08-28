@@ -70,7 +70,7 @@ const pos = (v: number) => Math.log10(v) / 4
 .tsu { background: linear-gradient(90deg, #ffb347, #ff4d1c); box-shadow: 0 0 18px rgba(255,90,40,0.9); }
 .tag { width: 12rem; font-size: 0.6rem; color: #5d6780; }
 .tag.hot { color: #ffb347; }
-.src { margin-top: 0.55rem; padding-left: 9.2rem; font-size: 0.55rem; letter-spacing: 0.04em; color: #46506a; }
+.src { align-self: center; max-width: 42rem; margin-top: 0.75rem; font-size: 0.62rem; line-height: 1.5; text-align: center; letter-spacing: 0.04em; color: #5d6780; }
 .src em { color: #7d879c; font-style: italic; }
 .big { display: flex; align-items: baseline; gap: 0.9rem; margin-top: 0.7rem; padding-left: 9.2rem; }
 .num { font-size: 3rem; font-weight: 700; letter-spacing: -0.03em; }

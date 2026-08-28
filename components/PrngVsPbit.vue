@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 
-const hex = ref('0000000000000000')
+const sample = ref(0.734)
+const roll = ref(5)
 const stage = ref(0)
 const bit = ref(0)
 const ops = ref(0)
@@ -9,10 +10,14 @@ const tape = ref<number[]>(Array.from({ length: 46 }, () => Math.random() < 0.5 
 const stages = ['seed', 'multiply', 'xor-shift', 'round', 'output']
 let a: any, b: any
 
-const rnd = () => Array.from({ length: 16 }, () => '0123456789abcdef'[(Math.random() * 16) | 0]).join('')
-
 onMounted(() => {
-  a = setInterval(() => { hex.value = rnd(); stage.value = (stage.value + 1) % stages.length }, 120)
+  a = setInterval(() => {
+    stage.value = (stage.value + 1) % stages.length
+    if (stage.value === stages.length - 1) {
+      sample.value = Math.random()
+      roll.value = Math.floor(sample.value * 6) + 1
+    }
+  }, 180)
   b = setInterval(() => {
     bit.value = Math.random() < 0.5 ? 1 : 0
     tape.value.push(bit.value); if (tape.value.length > 46) tape.value.shift()
@@ -30,7 +35,11 @@ onBeforeUnmount(() => { clearInterval(a); clearInterval(b) })
       <div class="pipe">
         <div v-for="(s, i) in stages" :key="s" class="st mono" :class="{ on: i === stage }">{{ s }}</div>
       </div>
-      <div class="hexline mono">0x{{ hex }}</div>
+      <div class="resultline mono">
+        <span><small>pseudo-random number</small>{{ sample.toFixed(3) }}</span>
+        <b>&rarr;</b>
+        <strong>die roll: {{ roll }}</strong>
+      </div>
       <div class="meter">
         <div class="mfill" :style="{ width: (30 + 60 * Math.abs(Math.sin(ops / 900))) + '%' }" />
       </div>
@@ -80,7 +89,11 @@ onBeforeUnmount(() => { clearInterval(a); clearInterval(b) })
   color: #4d566d; background: rgba(255,255,255,0.04); transition: all 140ms;
 }
 .st.on { color: #05060a; background: #94a3b8; }
-.hexline { font-size: 1.05rem; color: #9fb0cc; letter-spacing: 0.04em; }
+.resultline { display: flex; align-items: end; gap: 0.65rem; color: #9fb0cc; }
+.resultline span { font-size: 1rem; letter-spacing: 0.04em; }
+.resultline small { display: block; margin-bottom: 0.08rem; font-size: 0.42rem; color: #5d6780; letter-spacing: 0.08em; text-transform: uppercase; }
+.resultline b { padding-bottom: 0.08rem; color: #5d6780; font-weight: 400; }
+.resultline strong { margin-bottom: 0.02rem; padding: 0.28rem 0.5rem; border: 1px solid rgba(148,163,184,0.25); border-radius: 6px; background: rgba(148,163,184,0.09); color: #e9ecf4; font-size: 0.65rem; white-space: nowrap; }
 .ft { font-size: 0.7rem; line-height: 1.5; color: #7d879c; margin-top: auto; }
 .ft em { color: #fff; font-style: italic; }
 .vs { align-self: center; font-size: 0.6rem; color: #46506a; letter-spacing: 0.2em; }

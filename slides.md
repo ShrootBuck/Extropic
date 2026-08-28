@@ -40,8 +40,7 @@ fonts:
 </div>
 
 <!--
-
-Right now, inside every chip in this room, there is a war going on.
+Right now, inside every computer chip in this room, there is a war going on.
 
 Electrons are rattling around at random, because the chip is warm. That's thermal noise. And essentially all of modern computer engineering is dedicated to crushing it.
 
@@ -61,38 +60,17 @@ layout: default
   <BitCrusher class="h-full" :noise="0.17" />
 </div>
 
-<div class="grid grid-cols-3 gap-3 mt-4">
-  <div v-click class="panel p-3">
-    <div class="mono text-[0.55rem] tracking-[0.2em] uppercase text-[#ff8a4c]">the rule</div>
-    <div class="text-[0.75rem] mt-1 text-[#c8d0e0]">Above the line it's a <b class="text-white">1</b>. Below, a <b class="text-white">0</b>. Cross it and the chip <b class="text-white">lies</b>.</div>
-  </div>
-  <div v-click class="panel p-3">
-    <div class="mono text-[0.55rem] tracking-[0.2em] uppercase text-[#ff8a4c]">the price</div>
-    <div class="text-[0.75rem] mt-1 text-[#c8d0e0]">Voltage headroom, bigger transistors, more heat, all just to keep the orange <b class="text-white">away from the line</b>.</div>
-  </div>
-  <div v-click class="panel p-3">
-    <div class="mono text-[0.55rem] tracking-[0.2em] uppercase text-[#ff8a4c]">the physics</div>
-    <div class="text-[0.75rem] mt-1 text-[#c8d0e0]">Erasing randomness has a <b class="text-white">thermodynamic cost</b>. It's a law, not a bug.</div>
-  </div>
-</div>
-
 </div>
 
 <!--
 
 This is what a voltage inside a chip actually looks like: the orange trace. Fuzzy. Analog. Undecided.
 
-[click]
-
 A digital computer's entire job is to look at that and declare, with total confidence: above the line, one; below the line, zero. That's the blue trace, the fiction the chip insists on.
 
 And mostly the fiction holds. But keep an eye on it. Every so often the noise spikes far enough to cross the line, and the chip confidently reports a bit that never happened. *(red dot + the counter goes red)*
 
-[click]
-
 So the whole game is keeping that orange trace away from that line. You buy that margin with voltage headroom, with bigger transistors, and with waste heat. *(drag the noise slider up; the blue line falls apart)* That's what you're paying to prevent.
-
-[click]
 
 And it isn't sloppy engineering. Erasing randomness has a thermodynamic price. It's a law, and you can't design around it.
 
@@ -121,10 +99,9 @@ layout: default
 </div>
 
 <!--
-
 Here's the irony.
 
-Generative AI, the biggest workload we've built these hyper-precise machines for, is fundamentally a dice-rolling machine. Image models, language models: they don't compute an answer. They draw a random sample from a probability distribution, over and over and over.
+Generative AI, the biggest workload we've built these hyper-precise machines for, is fundamentally a dice-rolling machine. Image models, language models, cancer prediction models: they don't compute an answer. They draw a random sample from a probability distribution, over and over and over.
 
 So a GPU burns thousands of logic operations, and real power, running a pseudo-random number generator, an elaborate deterministic imitation of a coin flip, precisely because it has spent its whole existence guaranteeing that it can't actually flip a coin.
 
@@ -236,11 +213,10 @@ layoutClass: gap-8
 
 <div class="hair w-40 my-5" />
 
-<div class="space-y-3 text-[0.78rem]">
-  <div v-click>Put p&#8209;bits on a grid. Let each one <b class="text-white">see only its neighbours</b>. That gives you an Ising model.</div>
-  <div v-click>Every tick, each p&#8209;bit asks its neighbours what they're doing and re&#8209;flips itself accordingly. <b class="text-white">No CPU. No instructions.</b></div>
-  <div v-click>Memory and computation are <b class="text-white">the same transistors</b>. Nothing has to travel across the chip, which is where GPUs burn most of their power.</div>
-  <div v-click class="pt-1 text-[#ffb347]">Cool it down and structure appears out of static. Nobody computed those domains. <b class="text-white">The chip relaxed into them.</b></div>
+<div class="space-y-4 text-[0.78rem]">
+  <div v-click class="aster">Each p&#8209;bit sees only its neighbours and <b class="text-white">tends to match them</b>.</div>
+  <div v-click class="aster">It re&#8209;flips from local state + thermal noise. <b class="text-white">No CPU. No instructions. No data movement.</b></div>
+  <div v-click class="aster text-[#ffb347]">Cool the grid and structure emerges from static. <b class="text-white">The chip settles.</b></div>
 </div>
 
 </div>
@@ -259,7 +235,7 @@ So take a few hundred thousand of these.
 
 [click]
 
-Put them on a grid where each p-bit can only see its immediate neighbours. That is literally the Ising model: the same lattice of interacting spins from statistical mechanics.
+Put them on a grid where each p-bit can only see its immediate neighbours. Give each one a simple rule: copy what the p-bits around it are doing, with some randomness mixed in.
 
 [click]
 
@@ -293,11 +269,10 @@ layoutClass: gap-8
 
 <div class="hair w-40 my-5" />
 
-<div class="space-y-3 text-[0.78rem]">
-  <div v-click>Those neighbour connections are <b class="text-white">programmable</b>. Change them and you change the energy landscape. You choose <em class="text-white not-italic">which patterns are the deep valleys</em>.</div>
-  <div v-click>Train it so the deep valleys are your <b class="text-white">data</b>. Then just let the physics fall in.</div>
-  <div v-click>Same silicon. Same thermal noise. I only told it what <b class="text-white">"low energy"</b> means, and a word crystallised out of static.</div>
-  <div v-click class="pt-1 text-[#ffb347]">That's a generative model. It uses the same idea as an image diffusion model, except nothing computed its way there. <b class="text-white">It settled.</b></div>
+<div class="space-y-4 text-[0.78rem]">
+  <div v-click class="aster"><b class="text-white">Program the connections</b> to choose which patterns are low&#8209;energy valleys.</div>
+  <div v-click class="aster"><b class="text-white">Train the valleys on your data</b>, then let thermal noise search them.</div>
+  <div v-click class="aster text-[#ffb347]">Same silicon, new landscape: a word crystallises from static. <b class="text-white">A generative model that settles.</b></div>
 </div>
 
 </div>
@@ -355,7 +330,7 @@ layoutClass: gap-6
 </div>
 
 <div v-click class="mt-3 text-[0.68rem] text-[#7d879c]">
-  Ordinary CMOS. <b class="text-white">Not cryogenic, not quantum.</b> Roadmap runs to a billion p&#8209;bits in a rack.
+  Built like a normal computer chip. <b class="text-white">It works at room temperature with no extreme cooling.</b>
 </div>
 
 </div>
@@ -382,7 +357,7 @@ About two hundred seventy thousand p-bits on a single die. Each one talking to s
 
 [click]
 
-Most importantly, this is ordinary CMOS at room temperature. It is not cryogenic and it is not quantum. Their roadmap goes to a billion p-bits in a rack.
+Most importantly, it is built using the same basic process as a normal computer chip, and it works at room temperature. It does not need the extreme cooling or exotic hardware used by quantum computers. Their long-term goal is to put a billion p-bits into one computing cabinet.
 -->
 
 ---
@@ -391,27 +366,21 @@ layout: default
 
 <div class="h-full flex flex-col">
 
-<h1 class="mt-3">Ten thousand times. <span class="text-[#5d6780]">Allegedly.</span></h1>
+<h1 class="mt-3">Ten thousand times <span class="text-[#5d6780]">(allegedly)</span></h1>
 
 <div class="panel mt-5 px-8 py-7 flex-1 min-h-0 flex items-center">
   <EnergyBars />
 </div>
 
-<div class="grid grid-cols-4 gap-3 mt-4 text-[0.68rem]">
+<div class="grid grid-cols-3 gap-3 mt-4 text-[0.7rem]">
   <div v-click class="aster">That number is from a <b class="text-white">simulation</b> of a chip that isn't shipping yet, not a measurement.</div>
   <div v-click class="aster">"The right workloads" is doing heavy lifting. It <b class="text-white">can't run today's AI models</b> at all.</div>
   <div v-click class="aster">You'd have to <b class="text-white">rewrite everything</b> as energy-based models. The software is months old.</div>
-  <div v-click class="aster">An independent tester found <b class="text-white">plain laptop code beat their own simulator</b> by 70×.</div>
-</div>
-
-<div v-click class="mt-4 text-[0.85rem] text-center text-[#ffb347]">
-  Be skeptical of the number. The physics underneath it is the part that isn't sketchy.
 </div>
 
 </div>
 
 <!--
-
 Their headline number is up to ten thousand times more energy-efficient than a GPU. And I want to be honest about that one.
 
 [click] It comes from a simulation, of a chip that isn't shipping yet. It's not a measurement.
@@ -419,10 +388,6 @@ Their headline number is up to ten thousand times more energy-efficient than a G
 [click] "For the right workloads" is doing an enormous amount of work in that sentence because a TSU can't run today's AI models at all.
 
 [click] You'd have to rewrite them as energy-based models, and that software ecosystem is a few months old.
-
-[click] And when an independent blogger benchmarked their library, naive laptop code beat it by about seventy times because the hardware it's written for doesn't exist yet.
-
-[click] So: don't buy the ten thousand. But the physics underneath it is not the sketchy part.
 -->
 
 ---
@@ -443,10 +408,6 @@ layout: default
 </h1>
 
 <div class="hair w-80 my-8" />
-
-<div v-click class="text-[0.88rem] text-[#98a2b8] max-w-[40rem]">
-  Extropic may well not be the company that wins. But reframing noise as a <b class="text-white">resource</b> rather than a defect gives a genuinely different answer to the question <em class="text-white not-italic">"what is a computer?"</em>
-</div>
 
 </div>
 
