@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
+import { ref, onBeforeUnmount, computed } from 'vue'
+import { onSlideEnter, onSlideLeave } from '@slidev/client'
 
 const bias = ref(0.5)           // "control voltage" 0..1
 const bit = ref(0)
 const tape = ref<number[]>(Array.from({ length: 78 }, () => 0))
 const ones = ref(0)
 const total = ref(0)
-let timer: any = null
+let timer: ReturnType<typeof setInterval> | undefined
 
 const p = computed(() => bias.value)
 const frac = computed(() => (total.value ? ones.value / total.value : 0))
@@ -21,9 +22,21 @@ const tick = () => {
 }
 
 const reset = () => { ones.value = 0; total.value = 0 }
+const stop = () => {
+  if (timer) clearInterval(timer)
+  timer = undefined
+}
+const start = () => {
+  stop()
+  bit.value = 0
+  tape.value = Array.from({ length: 78 }, () => 0)
+  reset()
+  timer = setInterval(tick, 55)
+}
 
-onMounted(() => { timer = setInterval(tick, 55) })
-onBeforeUnmount(() => clearInterval(timer))
+onSlideEnter(start)
+onSlideLeave(stop)
+onBeforeUnmount(stop)
 </script>
 
 <template>

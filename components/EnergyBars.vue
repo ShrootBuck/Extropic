@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onBeforeUnmount } from 'vue'
+import { onSlideEnter, onSlideLeave } from '@slidev/client'
 
 const shown = ref(0)
 const counter = ref(0)
 let raf = 0
 
-onMounted(() => {
+const start = () => {
+  cancelAnimationFrame(raf)
+  shown.value = 0
+  counter.value = 0
   const t0 = performance.now()
   const tick = () => {
     const e = Math.min(1, (performance.now() - t0) / 1500)
@@ -15,8 +19,12 @@ onMounted(() => {
     if (e < 1) raf = requestAnimationFrame(tick)
   }
   raf = requestAnimationFrame(tick)
-  onBeforeUnmount(() => cancelAnimationFrame(raf))
-})
+}
+
+const stop = () => cancelAnimationFrame(raf)
+onSlideEnter(start)
+onSlideLeave(stop)
+onBeforeUnmount(stop)
 
 // log scale across 5 decades
 const pos = (v: number) => Math.log10(v) / 4
@@ -46,23 +54,19 @@ const pos = (v: number) => Math.log10(v) / 4
     </div>
 
     <div class="big">
+      <span class="claim mono">claimed energy efficiency</span>
       <span class="num mono grad-hot">{{ counter.toLocaleString() }}×</span>
-      <span class="lab">claimed energy efficiency, on the workloads it was built for</span>
-    </div>
-
-    <div class="src mono">
-      source &mdash; Extropic's own <em>simulation</em> of a production-scale TSU running a
-      Denoising Thermodynamic Model. Not a measured chip.
+      <span class="lab">on target workloads</span>
     </div>
   </div>
 </template>
 
 <style scoped>
 .bars { display: flex; flex-direction: column; gap: 0.75rem; width: 100%; }
-.axis { position: relative; height: 12px; }
+.axis { position: relative; height: 12px; margin: 0 12.75rem; }
 .tick { position: absolute; font-size: 0.5rem; color: #46506a; transform: translateX(-50%); letter-spacing: 0.05em; }
 .row { display: flex; align-items: center; gap: 0.75rem; }
-.name { width: 8.5rem; font-size: 0.78rem; color: #e9ecf4; text-align: right; }
+.name { width: 12rem; font-size: 0.78rem; color: #e9ecf4; text-align: right; }
 .name .sub { color: #5d6780; font-size: 0.58rem; }
 .track { flex: 1; height: 20px; border-radius: 8px; background: rgba(255,255,255,0.05); overflow: hidden; }
 .fill { height: 100%; border-radius: 8px; transition: none; }
@@ -70,9 +74,8 @@ const pos = (v: number) => Math.log10(v) / 4
 .tsu { background: linear-gradient(90deg, #ffb347, #ff4d1c); box-shadow: 0 0 18px rgba(255,90,40,0.9); }
 .tag { width: 12rem; font-size: 0.6rem; color: #5d6780; }
 .tag.hot { color: #ffb347; }
-.src { align-self: center; max-width: 42rem; margin-top: 0.75rem; font-size: 0.62rem; line-height: 1.5; text-align: center; letter-spacing: 0.04em; color: #5d6780; }
-.src em { color: #7d879c; font-style: italic; }
-.big { display: flex; align-items: baseline; gap: 0.9rem; margin-top: 0.7rem; padding-left: 9.2rem; }
-.num { font-size: 3rem; font-weight: 700; letter-spacing: -0.03em; }
-.lab { font-size: 0.74rem; color: #7d879c; }
+.big { display: flex; flex-direction: column; align-items: center; gap: 0.08rem; margin-top: 0.85rem; }
+.claim { font-size: 0.52rem; color: #7d879c; letter-spacing: 0.18em; text-transform: uppercase; }
+.num { font-size: 3.4rem; font-weight: 700; line-height: 1; letter-spacing: -0.04em; }
+.lab { font-size: 0.68rem; color: #5d6780; }
 </style>

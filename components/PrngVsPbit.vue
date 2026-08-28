@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onBeforeUnmount } from 'vue'
+import { onSlideEnter, onSlideLeave } from '@slidev/client'
 
 const sample = ref(0.734)
 const roll = ref(5)
@@ -8,9 +9,24 @@ const bit = ref(0)
 const ops = ref(0)
 const tape = ref<number[]>(Array.from({ length: 46 }, () => Math.random() < 0.5 ? 1 : 0))
 const stages = ['seed', 'multiply', 'xor-shift', 'round', 'output']
-let a: any, b: any
+let a: ReturnType<typeof setInterval> | undefined
+let b: ReturnType<typeof setInterval> | undefined
 
-onMounted(() => {
+const stop = () => {
+  if (a) clearInterval(a)
+  if (b) clearInterval(b)
+  a = undefined
+  b = undefined
+}
+
+const start = () => {
+  stop()
+  sample.value = 0.734
+  roll.value = 5
+  stage.value = 0
+  bit.value = 0
+  ops.value = 0
+  tape.value = Array.from({ length: 46 }, () => Math.random() < 0.5 ? 1 : 0)
   a = setInterval(() => {
     stage.value = (stage.value + 1) % stages.length
     if (stage.value === stages.length - 1) {
@@ -23,8 +39,11 @@ onMounted(() => {
     tape.value.push(bit.value); if (tape.value.length > 46) tape.value.shift()
     ops.value += 231
   }, 60)
-})
-onBeforeUnmount(() => { clearInterval(a); clearInterval(b) })
+}
+
+onSlideEnter(start)
+onSlideLeave(stop)
+onBeforeUnmount(stop)
 </script>
 
 <template>

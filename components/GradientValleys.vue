@@ -1,8 +1,16 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onSlideEnter, onSlideLeave } from '@slidev/client'
 
 const canvas = ref<HTMLCanvasElement | null>(null)
 let frame = 0
+let active = false
+let startAnimation = () => {}
+let stopAnimation = () => {}
+
+onSlideEnter(() => { active = true; startAnimation() })
+onSlideLeave(() => { active = false; stopAnimation() })
+onBeforeUnmount(() => stopAnimation())
 
 type Point = { x: number; y: number }
 
@@ -65,7 +73,10 @@ onMounted(() => {
     y: height * 0.59 + y * height * 0.17 - (z - 0.38) * height * 0.19,
   })
 
+  let running = false
+  let startedAt = 0
   const draw = (now: number) => {
+    if (!running) return
     ctx.clearRect(0, 0, width, height)
 
     const glow = ctx.createRadialGradient(width * 0.51, height * 0.62, 0, width * 0.51, height * 0.62, width * 0.52)
@@ -153,7 +164,7 @@ onMounted(() => {
       ctx.stroke()
       ctx.setLineDash([])
 
-      const cycle = reducedMotion ? 1 : ((now / 3800 + pathIndex * 0.137) % 1)
+      const cycle = reducedMotion ? 1 : (((now - startedAt) / 3800 + pathIndex * 0.137) % 1)
       const eased = 1 - (1 - cycle) ** 2.4
       const point = path[Math.min(path.length - 1, Math.floor(eased * path.length))]
       const p = project(point.x, point.y)
@@ -171,19 +182,28 @@ onMounted(() => {
       ctx.fill()
     })
 
-    if (!reducedMotion) frame = requestAnimationFrame(draw)
+    if (!reducedMotion && running) frame = requestAnimationFrame(draw)
   }
 
   fit()
   const resizeObserver = new ResizeObserver(() => {
     fit()
-    if (reducedMotion) draw(performance.now())
+    if (reducedMotion && active) draw(performance.now())
   })
   resizeObserver.observe(c)
-  draw(performance.now())
+  startAnimation = () => {
+    stopAnimation()
+    running = true
+    startedAt = performance.now()
+    draw(startedAt)
+  }
+  stopAnimation = () => {
+    running = false
+    cancelAnimationFrame(frame)
+  }
+  if (active) startAnimation()
 
   onBeforeUnmount(() => {
-    cancelAnimationFrame(frame)
     resizeObserver.disconnect()
   })
 })

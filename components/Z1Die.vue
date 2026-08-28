@@ -1,8 +1,16 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { onSlideEnter, onSlideLeave } from '@slidev/client'
 
 const cvs = ref<HTMLCanvasElement | null>(null)
 let raf = 0
+let active = false
+let startAnimation = () => {}
+let stopAnimation = () => {}
+
+onSlideEnter(() => { active = true; startAnimation() })
+onSlideLeave(() => { active = false; stopAnimation() })
+onBeforeUnmount(() => stopAnimation())
 
 onMounted(() => {
   const c = cvs.value!
@@ -37,7 +45,14 @@ onMounted(() => {
   const ro = new ResizeObserver(fit); ro.observe(c)
 
   let t = 0
+  const resetSimulation = () => {
+    t = 0
+    for (let i = 0; i < state.length; i++) state[i] = Math.random() < 0.45 ? 1 : 0
+  }
+
+  let running = false
   const draw = () => {
+    if (!running) return
     if (!W) { raf = requestAnimationFrame(draw); return }
     t += 0.016
 
@@ -95,10 +110,20 @@ onMounted(() => {
     lg.addColorStop(1, 'rgba(120,215,255,0)')
     ctx.fillStyle = lg; ctx.fillRect(ox, sy - 14, S, 28)
 
+    if (running) raf = requestAnimationFrame(draw)
+  }
+  startAnimation = () => {
+    stopAnimation()
+    resetSimulation()
+    running = true
     raf = requestAnimationFrame(draw)
   }
-  draw()
-  onBeforeUnmount(() => { cancelAnimationFrame(raf); ro.disconnect() })
+  stopAnimation = () => {
+    running = false
+    cancelAnimationFrame(raf)
+  }
+  if (active) startAnimation()
+  onBeforeUnmount(() => ro.disconnect())
 })
 </script>
 

@@ -1,8 +1,16 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onSlideEnter, onSlideLeave } from '@slidev/client'
 
 const canvas = ref<HTMLCanvasElement | null>(null)
 let frame = 0
+let active = false
+let startAnimation = () => {}
+let stopAnimation = () => {}
+
+onSlideEnter(() => { active = true; startAnimation() })
+onSlideLeave(() => { active = false; stopAnimation() })
+onBeforeUnmount(() => stopAnimation())
 
 onMounted(async () => {
   const c = canvas.value!
@@ -44,25 +52,35 @@ onMounted(async () => {
     sourceCtx.fillText('NOISE', x, y)
   }
 
+  let running = false
   const draw = () => {
+    if (!running) return
     ctx.clearRect(0, 0, width, height)
     for (let y = 0; y < height; y += rowHeight) {
       const offset = Math.floor(0.34 * (Math.random() - 0.5) * 30 * rowHeight)
       ctx.drawImage(source, 0, y, width, rowHeight, offset, y, width, rowHeight)
     }
-    if (!reducedMotion) frame = requestAnimationFrame(draw)
+    if (!reducedMotion && running) frame = requestAnimationFrame(draw)
   }
 
   fit()
   const resizeObserver = new ResizeObserver(() => {
     fit()
-    if (reducedMotion) draw()
+    if (reducedMotion && active) draw()
   })
   resizeObserver.observe(c)
-  draw()
+  startAnimation = () => {
+    stopAnimation()
+    running = true
+    draw()
+  }
+  stopAnimation = () => {
+    running = false
+    cancelAnimationFrame(frame)
+  }
+  if (active) startAnimation()
 
   onBeforeUnmount(() => {
-    cancelAnimationFrame(frame)
     resizeObserver.disconnect()
   })
 })

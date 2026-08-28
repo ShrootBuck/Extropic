@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { onSlideEnter, onSlideLeave } from '@slidev/client'
 
 const props = withDefaults(defineProps<{
   n?: number
@@ -17,6 +18,13 @@ const auto = ref(true)
 const sweeps = ref(0)
 const cvs = ref<HTMLCanvasElement | null>(null)
 let raf = 0
+let active = false
+let startAnimation = () => {}
+let stopAnimation = () => {}
+
+onSlideEnter(() => { active = true; startAnimation() })
+onSlideLeave(() => { active = false; stopAnimation() })
+onBeforeUnmount(() => stopAnimation())
 
 onMounted(() => {
   const N = props.n
@@ -77,7 +85,17 @@ onMounted(() => {
   fit()
   const ro = new ResizeObserver(fit); ro.observe(c)
 
+  const resetSimulation = () => {
+    for (let i = 0; i < s.length; i++) s[i] = Math.random() < 0.5 ? -1 : 1
+    T.value = props.tHot
+    auto.value = true
+    sweeps.value = 0
+    t0 = performance.now()
+  }
+
+  let running = false
   const draw = () => {
+    if (!running) return
     if (!W) { raf = requestAnimationFrame(draw); return }
     if (auto.value) {
       const el = (performance.now() - t0) / 1000
@@ -98,10 +116,20 @@ onMounted(() => {
     ctx.clearRect(0, 0, W, H)
     ctx.drawImage(off, 0, 0, W, H)
 
+    if (running) raf = requestAnimationFrame(draw)
+  }
+  startAnimation = () => {
+    stopAnimation()
+    resetSimulation()
+    running = true
     raf = requestAnimationFrame(draw)
   }
-  draw()
-  onBeforeUnmount(() => { cancelAnimationFrame(raf); ro.disconnect() })
+  stopAnimation = () => {
+    running = false
+    cancelAnimationFrame(raf)
+  }
+  if (active) startAnimation()
+  onBeforeUnmount(() => ro.disconnect())
 })
 </script>
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { onSlideEnter, onSlideLeave } from '@slidev/client'
 
 const props = withDefaults(defineProps<{ noise?: number, showDigital?: boolean }>(),
   { noise: 0.17, showDigital: true })
@@ -8,6 +9,13 @@ const level = ref(props.noise)   // "thermal noise" knob
 const errors = ref(0)
 const cvs = ref<HTMLCanvasElement | null>(null)
 let raf = 0
+let active = false
+let startAnimation = () => {}
+let stopAnimation = () => {}
+
+onSlideEnter(() => { active = true; startAnimation() })
+onSlideLeave(() => { active = false; stopAnimation() })
+onBeforeUnmount(() => stopAnimation())
 
 onMounted(() => {
   const c = cvs.value!
@@ -46,9 +54,19 @@ onMounted(() => {
     truth.push(drive)
     if (buf.length > N) { buf.shift(); truth.shift() }
   }
-  for (let i = 0; i < N; i++) push()
+  const reset = () => {
+    phase = 0
+    spare = null
+    buf.length = 0
+    truth.length = 0
+    errors.value = 0
+    for (let i = 0; i < N; i++) push()
+  }
+  reset()
 
+  let running = false
   const draw = () => {
+    if (!running) return
     if (!W) { raf = requestAnimationFrame(draw); return }
     push()
     ctx.clearRect(0, 0, W, H)
@@ -117,10 +135,20 @@ onMounted(() => {
       }
     }
 
+    if (running) raf = requestAnimationFrame(draw)
+  }
+  startAnimation = () => {
+    stopAnimation()
+    reset()
+    running = true
     raf = requestAnimationFrame(draw)
   }
-  draw()
-  onBeforeUnmount(() => { cancelAnimationFrame(raf); ro.disconnect() })
+  stopAnimation = () => {
+    running = false
+    cancelAnimationFrame(raf)
+  }
+  if (active) startAnimation()
+  onBeforeUnmount(() => ro.disconnect())
 })
 </script>
 

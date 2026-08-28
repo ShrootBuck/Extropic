@@ -1,9 +1,17 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
+import { onSlideEnter, onSlideLeave } from '@slidev/client'
 
 const T = ref(0.42)
 const cvs = ref<HTMLCanvasElement | null>(null)
 let raf = 0
+let active = false
+let startAnimation = () => {}
+let stopAnimation = () => {}
+
+onSlideEnter(() => { active = true; startAnimation() })
+onSlideLeave(() => { active = false; stopAnimation() })
+onBeforeUnmount(() => stopAnimation())
 
 const BINS = 110
 const NGHOST = 48
@@ -43,9 +51,20 @@ onMounted(() => {
   }
 
   let last = performance.now()
-  burnUntil = last + 1100
+  const resetSimulation = () => {
+    T.value = 0.42
+    hist = new Float64Array(BINS)
+    walkers = Array.from({ length: NGHOST }, () => Math.random())
+    lead = 0.17
+    trail = []
+    last = performance.now()
+    burnUntil = last + 1100
+  }
+  resetSimulation()
 
+  let running = false
   const draw = () => {
+    if (!running) return
     if (!W) { raf = requestAnimationFrame(draw); return }
     const t = T.value
     const now = performance.now()
@@ -139,10 +158,20 @@ onMounted(() => {
     ctx.fillText('what thermodynamics predicts', W - 168, hTop - 3)
     ctx.shadowBlur = 0
 
+    if (running) raf = requestAnimationFrame(draw)
+  }
+  startAnimation = () => {
+    stopAnimation()
+    resetSimulation()
+    running = true
     raf = requestAnimationFrame(draw)
   }
-  draw()
-  onBeforeUnmount(() => { cancelAnimationFrame(raf); ro.disconnect() })
+  stopAnimation = () => {
+    running = false
+    cancelAnimationFrame(raf)
+  }
+  if (active) startAnimation()
+  onBeforeUnmount(() => ro.disconnect())
 })
 </script>
 
